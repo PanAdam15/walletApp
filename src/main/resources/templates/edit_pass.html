@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Add pass</title>
+  <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+  <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container text-center">
+  <div>
+    <h1>Add pass</h1>
+  </div>
+  <form action="#"
+        th:action="@{/update/{id}(id=${password.id})}"
+        th:object="${password}"
+        method="post">
+    <label for="login">Login</label>
+    <input type="text" th:field="*{login}" id="login" placeholder="Login">
+    <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
+    <label for="walletPassword">Password</label>
+    <input type="text" th:field="*{walletPassword}" id="walletPassword" placeholder="walletPassword">
+    <span th:if="${#fields.hasErrors('walletPassword')}" th:errors="*{walletPassword}"></span>
+    <input type="submit" value="Update Password">
+  </form>
+</div>
+</body>
+</html>

@@ -14,7 +14,7 @@ public class Password {
     private Long id;
 
     @Column
-    private String password;
+    private String walletPassword;
 
     @Column
     private String web_address;
@@ -47,12 +47,12 @@ public class Password {
         this.id = id;
     }
 
-    public String getPassword() {
-        return password;
+    public String getWalletPassword() {
+        return walletPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setWalletPassword(String walletPassword) {
+        this.walletPassword = walletPassword;
     }
 
     public String getWeb_address() {
