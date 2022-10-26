@@ -24,6 +24,17 @@ public class User {
     @Column
     private Key secretKey;
 
+    @Column
+    private String secondPassword;
+
+    public String getSecondPassword() {
+        return secondPassword;
+    }
+
+    public void setSecondPassword(String secondPassword) {
+        this.secondPassword = secondPassword;
+    }
+
     public Key getSecretKey() {
         return secretKey;
     }

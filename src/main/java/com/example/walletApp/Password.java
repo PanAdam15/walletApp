@@ -25,16 +25,6 @@ public class Password {
     @Column
     private String login;
 
-    @Column
-    private Boolean hash;
-
-    public Boolean getHash() {
-        return hash;
-    }
-
-    public void setHash(Boolean hash) {
-        this.hash = hash;
-    }
 
     @ManyToOne
     @JoinColumn(name = "user_id")
