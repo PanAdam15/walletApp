@@ -7,6 +7,7 @@
   <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
+<style>.hidden { -webkit-text-security: disc; /* Default */ }</style>
 <body>
 <div class="container text-center">
   <div>
@@ -66,65 +67,14 @@
       <tr th:each="password, status: ${listPasswords}">
         <td th:text="${password.id}">Pass ID</td>
         <td th:text="${password.login}">Login</td>
-        <td th:text="${password.walletPassword}">Hashed password</td>
-        <td ><a data-bs-toggle="modal" data-row="${password}"
-                th:attr="data-bs-target='#modal-warning'+${password.id }">Inactivate</a>
-          <div th:fragment="modal" class="modal fade" th:id="|passwordModal${status.index}|" tabindex="-1"/>
+        <td class="hidden" th:text="${password.walletPassword}">Password</td>
+
         <td><a th:href="@{/edit/{id}(id=${password.id})}">Edit</a></td>
         <td><a th:href="@{/delete/{id}(id=${password.id})}">Delete</a></td>
       </tr>
       </tbody>
     </table>
   </div>
-
-  <div th:each="password, status : ${listPasswords}" class="card mb-3">
-    <div class="row g-0">
-      <!--  <div class="col-md-3">
-          <img src="/images/noimage2.png" alt="...">
-      </div>-->
-      <div class="col-md-12">
-        <div class="card-body">
-          <h3 class="card-title"
-              th:text="${password.login}">Name</h3>
-
-          <!-- Button trigger modal -->
-          <button type="button" class="btn btn-secondary btn-sm"
-                  data-bs-toggle="modal" th:data-bs-target="|passwordModal${status.index}|">
-            <i class="fas fa-address-card"></i> More
-          </button>
-
-          <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1"
-               aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div
-                    class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"
-                      th:text="${password.login}">Modal title</h5>
-                  <button type="button" class="btn-close"
-                          data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                  <span class="d-inline"
-                        th:text="${password.id}"></span> | <span
-                        th:text="${password.walletPassword}"> Pass</span>
-                </div>
-
-                <p class="card-body"
-                   th:text="${password.id}"></p>
-              </div>
-              <div class="modal-footer"></div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <p>
-</div>
 
 </div>
 </body>
