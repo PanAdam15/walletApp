@@ -2,6 +2,7 @@ package com.example.walletApp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -14,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 @Controller
@@ -47,7 +49,7 @@ public class AppController {
     @GetMapping("/users")
     public String listUsers(Model model) {
         List<User> listUsers = userRepo.findAll();
-        List<Password> listPasswords = passwordRepo.findAll();
+        List<Password> listPasswords = passwordRepo.findByUser(getUser());
         model.addAttribute("listUsers", listUsers);
         model.addAttribute("listPasswords", listPasswords);
         return "users";
@@ -138,29 +140,8 @@ public class AppController {
     public String addNewPass(String walletPassword, String login) throws Exception {
         Password p = new Password();
         p.setLogin(login);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userLoginName = authentication.getName();
-        User user = userRepo.findByLogin(userLoginName);
-        p.setUser(user);
-        p.setWalletPassword(aeSenc.encrypt(walletPassword, user.getSecretKey()));
-
-//        if(p.getHash())
-//            p.setWalletPassword(calculateHMAC("salt"+walletPassword,"pepper"));
-//        else
-//            p.setWalletPassword(calculateSHA512("salt"+"pepper"+walletPassword));
-// w hasłach - zrobić podstrone z detalami o hasle jak web adres opis i te ktore juz sa, potem klikajac przycisk odswiezac widok z zdekryptowanym haslem.
-// w bazie danych przechowywac odszyfrowany i metoda js zmieniac styl widoczny/niewidoczny xD
-//        try {
-//            String text = "My secret text.";
-//            Key key = generateKey();
-//            String encrypted = encrypt(text, key);
-//            System.out.println("encrypted: " + encrypted);
-//            String decrypted = decrypt(encrypted, key);
-//            System.out.println("decrytped: " + decrypted);
-//        } catch (Exception ex) {
-//            Logger.getLogger(AESenc.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+        p.setUser(getUser());
+        p.setWalletPassword(aeSenc.encrypt(walletPassword, getUser().getSecretKey()));
         passwordRepo.save(p);
 
         return "add_success_page";
