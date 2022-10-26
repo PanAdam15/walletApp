@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="ISO-8859-1">
-  <title>Add pass</title>
-  <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
-  <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-  <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <meta charset="ISO-8859-1">
+    <title>Add pass</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container text-center">
@@ -16,11 +16,12 @@
         method="post" style="max-width: 600px; margin: 0 auto;">
     <div class="m-3">
       <div class="form-group row">
-        <label class="col-4 col-form-label">Login: </label>
-        <div class="col-8">
+
+            <label class="col-4 col-form-label">Login: </label>
           <input type="text" th:field="*{login}" class="form-control" required />
+            <label class="col-4 col-form-label">Pass: </label>
           <input type="text" th:field="*{walletPassword}" class="form-control" required />
-        </div>
+
       </div>
 
       <div>

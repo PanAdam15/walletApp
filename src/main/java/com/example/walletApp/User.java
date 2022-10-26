@@ -3,6 +3,7 @@ package com.example.walletApp;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.security.Key;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,8 +18,19 @@ public class User {
     @Column(nullable = false, unique = true, length = 45)
     private String login;
      
-    @Column(nullable = false, length = 64)
+    @Column(nullable = false, length = 512)
     private String password;
+
+    @Column
+    private Key secretKey;
+
+    public Key getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(Key secretKey) {
+        this.secretKey = secretKey;
+    }
 
     public Long getId() {
         return id;
