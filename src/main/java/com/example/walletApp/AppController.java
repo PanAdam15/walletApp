@@ -2,11 +2,8 @@ package com.example.walletApp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -15,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 @Controller
@@ -97,7 +93,7 @@ public class AppController {
     }
 
     @RequestMapping("/decrypted/{id}")
-    public String handleDecryption(@PathVariable("id") long id, @RequestParam(name ="userPassword") String userPassword, Password password,
+    public String handleDecryption(@PathVariable("id") long id, @RequestParam(name = "userPassword") String userPassword, Password password,
                                    BindingResult result, Model model) throws Exception {
         if (result.hasErrors()) {
             password.setId(id);
@@ -109,11 +105,11 @@ public class AppController {
         SCryptPasswordEncoder passwordEncoder = new SCryptPasswordEncoder();
         Pbkdf2PasswordEncoder encoder = new Pbkdf2PasswordEncoder();
         //|| Objects.equals("{pbkdf2}" + encoder.encode(userPassword), user.getPassword())
-        if(Objects.equals(userPassword, user.getSecondPassword()) ) {
+        if (Objects.equals(userPassword, user.getSecondPassword())) {
             String decrypted = aeSenc.decrypt(password.getWalletPassword(), user.getSecretKey());
             model.addAttribute("decrypted_password", decrypted);
             return "encrypted_pass";
-        }else
+        } else
             return "error_value";
 
 
@@ -155,11 +151,38 @@ public class AppController {
         return "redirect:/users";
     }
 
-    public User getUser(){
+    public User getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userLoginName = authentication.getName();
         User user = userRepo.findByLogin(userLoginName);
         return user;
     }
 
+
+    @GetMapping("/change_password")
+    public String showChangePasswordForm(User user, Model model) {
+        user = userRepo.findByLogin(getUser().getLogin());
+
+
+        model.addAttribute("user", user);
+        return "change_password";
+    }
+
+    @RequestMapping("/update_password")
+    public String changePassword(Boolean hash, @RequestParam(name = "oldPassword") String oldPassword, @RequestParam(name = "newPassword") String newPassword, User user,
+                                 BindingResult result, Model model) throws Exception {
+        user = getUser();
+        if (Objects.equals(oldPassword, user.getSecondPassword())) {
+            if (hash) {
+                SCryptPasswordEncoder passwordEncoder = new SCryptPasswordEncoder();
+                user.setPassword("{scrypt}" + passwordEncoder.encode(newPassword));
+            } else {
+                Pbkdf2PasswordEncoder encoder = new Pbkdf2PasswordEncoder();
+                user.setPassword("{pbkdf2}" + encoder.encode(newPassword));
+            }
+            userRepo.save(user);
+            return "add_success_page";
+        }
+        return "error_value";
+    }
 }
