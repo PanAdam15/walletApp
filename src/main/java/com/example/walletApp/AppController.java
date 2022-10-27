@@ -51,71 +51,6 @@ public class AppController {
         return "users";
     }
 
-    @GetMapping("/new")
-    public String showNewPassForm(Model model) {
-        model.addAttribute("password", new Password());
-
-        return "add_new_pass";
-    }
-
-    @GetMapping("/edit/{id}")
-    public String showUpdateForm(@PathVariable("id") long id, Model model) {
-        Password password = passwordRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid pass Id:" + id));
-
-        model.addAttribute("password", password);
-        return "edit_pass";
-    }
-
-    @PostMapping("/update/{id}")
-    public String updatePassword(@PathVariable("id") long id, Password password,
-                                 BindingResult result, Model model) throws Exception {
-        if (result.hasErrors()) {
-            password.setId(id);
-            return "edit_pass";
-        }
-        password.setWalletPassword(aeSenc.encrypt(password.getWalletPassword(), getUser().getSecretKey()));
-        password.setUser(getUser());
-        passwordRepo.save(password);
-        return "add_success_page";
-    }
-
-    @GetMapping("/decrypt/{id}")
-    public String showDecryptForm(@PathVariable("id") long id, Model model) {
-        Password password = passwordRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid pass Id:" + id));
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userLoginName = authentication.getName();
-        User user = userRepo.findByLogin(userLoginName);
-        model.addAttribute("user", user);
-        model.addAttribute("password", password);
-        model.addAttribute("hash", sha256String);
-        return "decrypt_password";
-    }
-
-    @RequestMapping("/decrypted/{id}")
-    public String handleDecryption(@PathVariable("id") long id, @RequestParam(name = "userPassword") String userPassword, Password password,
-                                   BindingResult result, Model model) throws Exception {
-        if (result.hasErrors()) {
-            password.setId(id);
-            return "decrypt_password";
-        }
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userLoginName = authentication.getName();
-        User user = userRepo.findByLogin(userLoginName);
-        SCryptPasswordEncoder passwordEncoder = new SCryptPasswordEncoder();
-        Pbkdf2PasswordEncoder encoder = new Pbkdf2PasswordEncoder();
-        //|| Objects.equals("{pbkdf2}" + encoder.encode(userPassword), user.getPassword())
-        if (Objects.equals(userPassword, user.getSecondPassword())) {
-            String decrypted = aeSenc.decrypt(password.getWalletPassword(), user.getSecretKey());
-            model.addAttribute("decrypted_password", decrypted);
-            return "encrypted_pass";
-        } else
-            return "error_value";
-
-
-    }
-
     @PostMapping("/process_register")
     public String processRegister(User user, Boolean hash) throws Exception {
         user.setSecondPassword(user.getPassword());
@@ -133,30 +68,9 @@ public class AppController {
         return "register_success";
     }
 
-    @PostMapping("/process_new_pass")
-    public String addNewPass(String walletPassword, String login) throws Exception {
-        Password p = new Password();
-        p.setLogin(login);
-        p.setUser(getUser());
-        p.setWalletPassword(aeSenc.encrypt(walletPassword, getUser().getSecretKey()));
-        passwordRepo.save(p);
-
-        return "add_success_page";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deletePass(@PathVariable("id") long id, Model model) {
-        Password password = passwordRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid pass Id:" + id));
-        passwordRepo.delete(password);
-        return "redirect:/users";
-    }
-
     public User getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userLoginName = authentication.getName();
-        User user = userRepo.findByLogin(userLoginName);
-        return user;
+        return userRepo.findByLogin(authentication.getName());
     }
 
 
