@@ -75,6 +75,7 @@ public class AppController {
             return "edit_pass";
         }
         password.setWalletPassword(aeSenc.encrypt(password.getWalletPassword(), getUser().getSecretKey()));
+        password.setUser(getUser());
         passwordRepo.save(password);
         return "add_success_page";
     }
@@ -125,7 +126,7 @@ public class AppController {
             Pbkdf2PasswordEncoder encoder = new Pbkdf2PasswordEncoder();
             user.setPassword("{pbkdf2}" + encoder.encode(user.getPassword()));
         }
-
+        if(user.getSecretKey()==null)
         user.setSecretKey(AESenc.generateKey());
         userRepo.save(user);
 
@@ -162,8 +163,6 @@ public class AppController {
     @GetMapping("/change_password")
     public String showChangePasswordForm(User user, Model model) {
         user = userRepo.findByLogin(getUser().getLogin());
-
-
         model.addAttribute("user", user);
         return "change_password";
     }
@@ -172,6 +171,7 @@ public class AppController {
     public String changePassword(Boolean hash, @RequestParam(name = "oldPassword") String oldPassword, @RequestParam(name = "newPassword") String newPassword, User user,
                                  BindingResult result, Model model) throws Exception {
         user = getUser();
+
         if (Objects.equals(oldPassword, user.getSecondPassword())) {
             if (hash) {
                 SCryptPasswordEncoder passwordEncoder = new SCryptPasswordEncoder();
@@ -180,6 +180,7 @@ public class AppController {
                 Pbkdf2PasswordEncoder encoder = new Pbkdf2PasswordEncoder();
                 user.setPassword("{pbkdf2}" + encoder.encode(newPassword));
             }
+            user.setSecondPassword(newPassword);
             userRepo.save(user);
             return "add_success_page";
         }
