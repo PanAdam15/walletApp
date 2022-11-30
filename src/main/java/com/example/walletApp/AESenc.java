@@ -41,7 +41,7 @@ public class AESenc {
  }
 
  // Generate a new encryption key.
-  static Key generateKey() throws Exception {
+   static Key generateKey() {
   return new SecretKeySpec(keyValue, ALGO);
  }
 
