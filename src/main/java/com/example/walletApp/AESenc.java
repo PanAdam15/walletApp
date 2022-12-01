@@ -13,13 +13,13 @@ import java.util.logging.Logger;
 public class AESenc {
  private static final Random RANDOM = new SecureRandom();
  private static final String HMAC_SHA512 = "HmacSHA512";
- private static final String ALGO = "AES";
+ private static final String Algo = "AES";
  private static final byte[] keyValue
          = new byte[]{'T', 'h', 'e', 'B', 'e', 's', 't', 'S', 'e', 'c', 'r', 'e', 't', 'K', 'e', 'y'};
 
  //encrypts string and returns encrypted string
  public String encrypt(String data, Key key) throws Exception {
-  Cipher c = Cipher.getInstance(ALGO);
+  Cipher c = Cipher.getInstance(Algo);
   c.init(Cipher.ENCRYPT_MODE, key);
   byte[] encVal = c.doFinal(data.getBytes());
   return Base64.getEncoder().encodeToString(encVal);
@@ -27,7 +27,7 @@ public class AESenc {
 
  //decrypts string and returns plain text
  public String decrypt(String encryptedData, Key key) throws Exception {
-  Cipher c = Cipher.getInstance(ALGO);
+  Cipher c = Cipher.getInstance(Algo);
   c.init(Cipher.DECRYPT_MODE, key);
   byte[] decodedValue = Base64.getDecoder().decode(encryptedData);
   byte[] decValue = c.doFinal(decodedValue);
@@ -41,8 +41,12 @@ public class AESenc {
  }
 
  // Generate a new encryption key.
-   static Key generateKey() {
-  return new SecretKeySpec(keyValue, ALGO);
+   static Key generateKey(byte[] keyValue, String Algo) {
+  return new SecretKeySpec(keyValue, Algo);
+ }
+
+ static Key generateKey() {
+  return new SecretKeySpec(keyValue, Algo);
  }
 
  public String calculateHMAC(String text, byte[] key){

@@ -25,7 +25,6 @@ public class Password {
     @Column
     private String login;
 
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     @NotNull
