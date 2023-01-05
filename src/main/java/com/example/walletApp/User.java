@@ -27,6 +27,15 @@ public class User {
     @Column
     private String secondPassword;
 
+    public User() {
+    }
+    public User(String login,
+                String password) {
+
+        this.login = login;
+        this.password = password;
+    }
+
     public String getSecondPassword() {
         return secondPassword;
     }

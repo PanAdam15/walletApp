@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,9 @@ public class AppController {
     @Autowired
     private PasswordRepository passwordRepo;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private String sha256String;
 
     private AESenc aeSenc = new AESenc();
@@ -34,7 +38,11 @@ public class AppController {
         return "index";
     }
 
-
+    @GetMapping("/login")
+    public String loginPage() {
+        //zwrócenie nazwy widoku logowania - login.html
+        return "login";
+    }
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
