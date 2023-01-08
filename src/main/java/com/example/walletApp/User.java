@@ -4,6 +4,7 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.security.Key;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,6 +27,50 @@ public class User {
 
     @Column
     private String secondPassword;
+
+    @Column
+    private Integer failureCount;
+
+    @Column
+    private String ip;
+
+    @Column
+    private LocalDateTime date;
+
+    @Column
+    private boolean loginResult;
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public boolean isLoginResult() {
+        return loginResult;
+    }
+
+    public void setLoginResult(boolean loginResult) {
+        this.loginResult = loginResult;
+    }
+
+    public Integer getFailureCount() {
+        return failureCount;
+    }
+
+    public void setFailureCount(Integer failureCount) {
+        this.failureCount = failureCount;
+    }
 
     public User() {
     }

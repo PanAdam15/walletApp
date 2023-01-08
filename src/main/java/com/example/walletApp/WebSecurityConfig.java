@@ -27,6 +27,8 @@ import java.util.Map;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    private CustomSuccessHandler successHandler;
+    @Autowired
     private CustomUserDetailsService userAuthenticationDetails;
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -65,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .usernameParameter("login")
                 .passwordParameter("passwd")
-                .defaultSuccessUrl("/users", true)
+                .successHandler(successHandler)
                 .permitAll()
                 .and()
                 .logout()

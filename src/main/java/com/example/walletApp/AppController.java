@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,6 +27,8 @@ public class AppController {
 
     @Autowired
     private PasswordRepository passwordRepo;
+    @Autowired
+    private LoginResultRepository loginRepo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -54,8 +58,20 @@ public class AppController {
     public String listUsers(Model model) {
         List<User> listUsers = userRepo.findAll();
         List<Password> listPasswords = passwordRepo.findByUser(getUser());
+        LoginResult loginResultSucc = loginRepo.findLoginResultByUser(getUser(), true);
+        LoginResult loginResultFail = loginRepo.findLoginResultByUser(getUser(), false);
+        User user = userRepo.findByLogin(getUser().getLogin());
+        if(loginResultSucc==null){
+             loginResultSucc = new LoginResult(getUser(),"brak", "2005-11-11 10:30" ,true);
+        }
+        if(loginResultFail==null){
+            loginResultFail = new LoginResult(getUser(),"brak","2005-11-11 10:30",false);
+        }
         model.addAttribute("listUsers", listUsers);
         model.addAttribute("listPasswords", listPasswords);
+        model.addAttribute("loginResultSucc",loginResultSucc);
+        model.addAttribute("loginResultFail",loginResultFail);
+        model.addAttribute("userNow",user);
         return "users";
     }
 
