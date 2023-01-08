@@ -3,6 +3,21 @@
 
 </head>
 <body>
+<div th:if="${param.error}">
+  <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+</div>
+<div th:if="${param.error2}">
+  <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]] 5 sec blockade</p>
+</div>
+<div th:if="${param.error3}">
+  <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]] 10 sec blockade</p>
+</div>
+<div th:if="${param.error4}">
+  <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]] u good? 2 min blockade</p>
+</div>
+<div th:if="${param.errorUn}">
+  <p class="text-danger">Your account has been unlocked. Please try to login again.</p>
+</div>
 
 <h1>Logowanie do systemu:</h1>
 <form th:action="@{/login}" method="POST">

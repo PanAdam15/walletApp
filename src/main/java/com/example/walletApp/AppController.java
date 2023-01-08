@@ -44,7 +44,6 @@ public class AppController {
 
     @GetMapping("/login")
     public String loginPage() {
-        //zwrócenie nazwy widoku logowania - login.html
         return "login";
     }
     @GetMapping("/register")

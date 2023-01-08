@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.*;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +29,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomSuccessHandler successHandler;
+    @Autowired
+    private CustomLoginFailureHandler failureHandler;
+
     @Autowired
     private CustomUserDetailsService userAuthenticationDetails;
     @Bean
@@ -60,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/register").permitAll()
+                .antMatchers("/register","/login*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -68,6 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("login")
                 .passwordParameter("passwd")
                 .successHandler(successHandler)
+                .failureHandler(failureHandler)
                 .permitAll()
                 .and()
                 .logout()

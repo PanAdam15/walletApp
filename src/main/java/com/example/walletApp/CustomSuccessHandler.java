@@ -27,6 +27,9 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     @Autowired
     private LoginResultRepository loginRepository;
 
+    @Autowired
+    private CustomUserDetailsService userService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String userName = authentication.getName();
@@ -42,7 +45,9 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         loginResult.setDate(formatDateTime);
         loginResult.setSuccess(true);
         loginRepository.save(loginResult);
-
+        if (user.getFailedAttempt() > 0) {
+            userService.resetFailedAttempts(user.getLogin());
+        }
         redirectStrategy.sendRedirect(request, response, "/users");
     }
 }
