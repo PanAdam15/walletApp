@@ -10,55 +10,50 @@
 <style>.hidden { -webkit-text-security: disc; /* Default */ }</style>
 <body>
 <div class="container text-center">
-  <div>
-    <form th:action="@{/logout}" method="post">
-      <p>
-        ur wallet
-      </p>
-      <input type="submit" value="Sign Out" style="alignment: right" />
-    </form>
-
-    <h3><a th:href="@{/new}">Add</a></h3>
-    <h3><a th:href="@{/show_shared}">Shared</a></h3>
-  </div>
+  <h3><a th:href="@{/users}">Back</a></h3>
 
   <div>
-    <h1>List of Passwords</h1>
+    <h1>List of shared Passwords</h1>
   </div>
-  <h1>Succ date: [[${loginResultSucc.date}]]</h1>
-  <h1>Fail date: [[${loginResultFail.date}]]</h1>
+
 
   <div>
     <table class="table table-striped table-bordered">
       <thead class="thead-dark">
       <tr>
-        <th>Pass ID</th>
+        <th>Owner</th>
         <th>Login</th>
+        <th>SharedTo</th>
         <th>Password</th>
         <th>Edit</th>
         <th>Del</th>
         <th>Decrypt</th>
-        <th>Share</th>
-
       </tr>
       </thead>
       <tbody>
 
       <tr th:each="password, status: ${listPasswords}">
-        <td th:text="${password.id}">Pass ID</td>
+        <td th:text="${password.sharedFrom}">Owner</td>
         <td th:text="${password.login}">Login</td>
+        <td th:text="${password.sharedTo}">Shared To</td>
         <td class="hidden" th:text="${password.walletPassword}">Password</td>
+        <div th:if="${password.sharedFrom==user.login}">
+          <td><a th:href="@{/edit/{id}(id=${password.id})}">Edit</a></td>
+          <td><a th:href="@{/delete/{id}(id=${password.id})}">Delete</a></td>
 
-        <td><a th:href="@{/edit/{id}(id=${password.id})}">Edit</a></td>
-        <td><a th:href="@{/delete/{id}(id=${password.id})}">Delete</a></td>
+        </div>
+        <!-- ELSE -->
+        <div th:unless="${password.sharedFrom==user.login}">
+          <td>Edit</a></td>
+          <td>Delete</a></td>
+
+        </div>
         <td><a th:href="@{/decrypt/{id}(id=${password.id})}">Decrypt</a></td>
-        <td><a th:href="@{/share/{id}(id=${password.id})}">Share</a></td>
 
       </tr>
       </tbody>
     </table>
   </div>
-  <h3><a th:href="@{/change_password}">Change pass</a></h3>
 </div>
 </body>
 </html>

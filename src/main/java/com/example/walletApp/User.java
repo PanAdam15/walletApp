@@ -104,6 +104,7 @@ public class User {
         this.password = password;
         this.setEnabled(true);
         this.setAccountNonLocked(true);
+        this.setSecretKey(AESenc.generateKey());
     }
 
     public String getSecondPassword() {

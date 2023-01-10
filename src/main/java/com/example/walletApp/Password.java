@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
- 
+import java.security.Key;
+
 @Entity
 @Table(name = "passwords")
 public class Password {
@@ -30,6 +31,39 @@ public class Password {
     @NotNull
     @JsonIgnoreProperties({"passwords"})
     private User user;
+
+    @Column
+    private String sharedTo;
+
+    @Column
+    private String sharedFrom;
+
+    @Column
+    private Key secretKey;
+
+    public Key getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(Key secretKey) {
+        this.secretKey = secretKey;
+    }
+
+    public String getSharedFrom() {
+        return sharedFrom;
+    }
+
+    public void setSharedFrom(String sharedFrom) {
+        this.sharedFrom = sharedFrom;
+    }
+
+    public String getSharedTo() {
+        return sharedTo;
+    }
+
+    public void setSharedTo(String sharedTo) {
+        this.sharedTo = sharedTo;
+    }
 
     public User getUser() {
         return user;

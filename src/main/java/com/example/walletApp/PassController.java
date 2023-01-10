@@ -71,6 +71,33 @@ public class PassController {
         return "add_success_page";
     }
 
+    @GetMapping("/share/{id}")
+    public String sharePassword(@PathVariable("id") long id, Model model) throws Exception {
+        Password password = passwordRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid pass Id:" + id));
+        model.addAttribute("user", getUser());
+        model.addAttribute("password", password);
+        model.addAttribute("hash", sha256String);
+        return "share_password";
+    }
+    @RequestMapping(value = "/shared/{id}", method = {RequestMethod.GET, RequestMethod.POST})
+    public String handleSharing(@PathVariable("id") long id, @RequestParam(name = "sharedTo") String sharedTo, Password password,
+                                BindingResult result, Model model) throws Exception {
+        if (result.hasErrors()) {
+            password.setId(id);
+            return "share_password";
+        }
+        SCryptPasswordEncoder passwordEncoder = new SCryptPasswordEncoder();
+        Pbkdf2PasswordEncoder encoder = new Pbkdf2PasswordEncoder();
+        //|| Objects.equals("{pbkdf2}" + encoder.encode(userPassword), user.getPassword())
+        // User user = userRepo.findByLogin(getUser().getLogin());
+        password.setSecretKey(getUser().getSecretKey());
+        password.setSharedTo(sharedTo);
+        password.setSharedFrom(getUser().getLogin());
+        passwordRepo.save(password);
+        return "share_success";
+    }
+
     @GetMapping("/decrypt/{id}")
     public String showDecryptForm(@PathVariable("id") long id, Model model) {
         Password password = passwordRepo.findById(id)

@@ -73,13 +73,28 @@ public class AppController {
         model.addAttribute("userNow",user);
         return "users";
     }
+    @GetMapping("/show_shared")
+    public String listShared(Model model) {
+        List<User> listUsers = userRepo.findAll();
+        User user = userRepo.findByLogin(getUser().getLogin());
+        List<Password> listPasswords = passwordRepo.findByUser(getUser());
+        List<Password> listSharedPasswords = passwordRepo.findBySharedTo(getUser().getLogin());
+        LoginResult loginResultSucc = loginRepo.findLoginResultByUser(getUser(), true);
+        LoginResult loginResultFail = loginRepo.findLoginResultByUser(getUser(), false);
+        model.addAttribute("listUsers", listUsers);
+        model.addAttribute("listPasswords", listSharedPasswords);
+        model.addAttribute("loginResultSucc",loginResultSucc);
+        model.addAttribute("loginResultFail",loginResultFail);
+        model.addAttribute("user",user);
+        return "show_shared";
+    }
 
     @PostMapping("/process_register")
     public String processRegister(User user, Boolean hash) throws Exception {
         user.setSecondPassword(user.getPassword());
         if (hash) {
             SCryptPasswordEncoder passwordEncoder = new SCryptPasswordEncoder();
-            user.setPassword("{scrypt}" + passwordEncoder.encode(user.getPassword()));
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         } else {
             Pbkdf2PasswordEncoder encoder = new Pbkdf2PasswordEncoder();
             user.setPassword("{pbkdf2}" + encoder.encode(user.getPassword()));
