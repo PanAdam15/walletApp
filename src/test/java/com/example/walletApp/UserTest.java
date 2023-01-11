@@ -1,6 +1,6 @@
 package com.example.walletApp;
 
-import com.beust.ah.A;
+import com.example.walletApp.Entity.User;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

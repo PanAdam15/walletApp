@@ -1,6 +1,6 @@
 package com.example.walletApp;
 
-import static org.testng.Assert.*;
+import com.example.walletApp.Entity.Password;
 
 public class PasswordTest {
 

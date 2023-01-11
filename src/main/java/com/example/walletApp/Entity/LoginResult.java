@@ -1,14 +1,10 @@
-package com.example.walletApp;
+package com.example.walletApp.Entity;
 
+import com.example.walletApp.Entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.security.Key;
-import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
 
 @Entity
 @Table(name = "loginresult")

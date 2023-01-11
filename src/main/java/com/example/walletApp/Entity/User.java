@@ -1,5 +1,6 @@
-package com.example.walletApp;
+package com.example.walletApp.Entity;
  
+import com.example.walletApp.AESenc;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -98,13 +99,14 @@ public class User {
     public User() {
     }
     public User(String login,
-                String password) {
+                String password, String secondPassword) {
 
         this.login = login;
         this.password = password;
         this.setEnabled(true);
         this.setAccountNonLocked(true);
         this.setSecretKey(AESenc.generateKey());
+        this.setSecondPassword(secondPassword);
     }
 
     public String getSecondPassword() {

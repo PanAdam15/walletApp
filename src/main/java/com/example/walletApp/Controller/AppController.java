@@ -1,9 +1,17 @@
-package com.example.walletApp;
+package com.example.walletApp.Controller;
 
+import com.example.walletApp.*;
+import com.example.walletApp.Entity.LoginResult;
+import com.example.walletApp.Entity.Password;
+import com.example.walletApp.Entity.User;
+import com.example.walletApp.Repository.LoginResultRepository;
+import com.example.walletApp.Repository.PasswordRepository;
+import com.example.walletApp.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
@@ -12,8 +20,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,10 +48,12 @@ public class AppController {
         return "index";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/login_form")
     public String loginPage() {
-        return "login";
+        return "login_form";
     }
+
+
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
@@ -138,4 +146,5 @@ public class AppController {
         }
         return "error_value";
     }
+
 }

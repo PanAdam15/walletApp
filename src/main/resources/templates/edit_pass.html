@@ -23,6 +23,7 @@
     <label for="walletPassword">Password</label>
     <input type="text" th:field="*{walletPassword}" id="walletPassword" placeholder="walletPassword">
     <span th:if="${#fields.hasErrors('walletPassword')}" th:errors="*{walletPassword}"></span>
+    <input type="text" th:field="*{sharedTo}" id="sharedTo" placeholder="sharedTo" name="sharedTo" hidden readonly>
     </br>
 
     <input type="submit" value="Update Password">

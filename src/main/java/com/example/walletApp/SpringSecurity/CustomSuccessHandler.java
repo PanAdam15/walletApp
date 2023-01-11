@@ -1,6 +1,11 @@
-package com.example.walletApp;
+package com.example.walletApp.SpringSecurity;
 
 
+import com.example.walletApp.Service.CustomUserDetailsService;
+import com.example.walletApp.Entity.LoginResult;
+import com.example.walletApp.Entity.User;
+import com.example.walletApp.Repository.LoginResultRepository;
+import com.example.walletApp.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 @Component

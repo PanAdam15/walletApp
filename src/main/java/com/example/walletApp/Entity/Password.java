@@ -1,5 +1,6 @@
-package com.example.walletApp;
+package com.example.walletApp.Entity;
  
+import com.example.walletApp.Entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 

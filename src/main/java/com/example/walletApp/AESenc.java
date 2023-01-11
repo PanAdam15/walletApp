@@ -41,11 +41,11 @@ public class AESenc {
  }
 
  // Generate a new encryption key.
-   static Key generateKey(byte[] keyValue, String Algo) {
+   public static Key generateKey(byte[] keyValue, String Algo) {
   return new SecretKeySpec(keyValue, Algo);
  }
 
- static Key generateKey() {
+  public static Key generateKey() {
   return new SecretKeySpec(keyValue, Algo);
  }
 

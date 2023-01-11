@@ -1,5 +1,10 @@
-package com.example.walletApp;
+package com.example.walletApp.SpringSecurity;
 
+import com.example.walletApp.Service.CustomUserDetailsService;
+import com.example.walletApp.Entity.LoginResult;
+import com.example.walletApp.Entity.User;
+import com.example.walletApp.Repository.LoginResultRepository;
+import com.example.walletApp.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
