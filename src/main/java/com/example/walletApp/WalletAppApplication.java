@@ -26,12 +26,12 @@ public class WalletAppApplication {
 	AppController appController = new AppController();
 
 
-	@PostConstruct
-	public void init() {
-		Pbkdf2PasswordEncoder encoder = new Pbkdf2PasswordEncoder();
-		dao.save(new User("admin",
-				passwordEncoder.encode("admin"),"admin"));
-		dao.save(new User("ania",
-				passwordEncoder.encode("ania"),"ania"));
-	}
+//	@PostConstruct
+//	public void init() {
+//		Pbkdf2PasswordEncoder encoder = new Pbkdf2PasswordEncoder();
+//		dao.save(new User("admin",
+//				passwordEncoder.encode("admin"),"admin"));
+//		dao.save(new User("ania",
+//				passwordEncoder.encode("ania"),"ania"));
+//	}
 }
