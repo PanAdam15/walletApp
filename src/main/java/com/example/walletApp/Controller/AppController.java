@@ -48,9 +48,9 @@ public class AppController {
         return "index";
     }
 
-    @GetMapping("/login_form")
+    @GetMapping("/login")
     public String loginPage() {
-        return "login_form";
+        return "login";
     }
 
 

@@ -13,14 +13,14 @@
   <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]] 10 sec blockade</p>
 </div>
 <div th:if="${param.error4}">
-  <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]] u good? 2 min blockade</p>
+  <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]] 2 min blockade</p>
 </div>
 <div th:if="${param.errorUn}">
   <p class="text-danger">Your account has been unlocked. Please try to login again.</p>
 </div>
 
 <h1>Logowanie do systemu:</h1>
-<form th:action="@{/login_form}" method="POST">
+<form th:action="@{/login}" method="POST">
   <input type="text" name="login" placeholder="Login"/>
   <input type="password" name="passwd" placeholder="Hasło"/>
   <button type="submit">Zaloguj się</button>
