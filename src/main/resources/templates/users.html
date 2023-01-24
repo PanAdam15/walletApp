@@ -7,51 +7,87 @@
   <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
-<style>.hidden { -webkit-text-security: disc; /* Default */ }</style>
-<body>
-<div class="container text-center">
-  <div>
-    <form th:action="@{/logout}" method="post">
-      <p>
-        ur wallet
-      </p>
-      <input type="submit" value="Sign Out" style="alignment: right" />
-    </form>
+<style>.hidden { -webkit-text-security: disc; /* Default */ }
+table {
+  width: 100%;
 
-    <h3><a th:href="@{/new}">Add</a></h3>
+}
+
+.two-line-ellipsis {
+  overflow: hidden;
+  width: 325px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.button_moj {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+</style>
+
+<body>
+<div class="container ">
+  <div class="form-row">
+  <div class="col-4 text-center">
+    <form th:action="@{/logout}" method="post">
+      <button type="submit" name="submit" value="submit" class="btn btn-primary btn-lg active btn-block">Logout</button>
+    </form>
+    </div>
+    </br>
+    <div class="col-4 text-center">
+    <form th:action="@{/change_password}" >
+      <button type="submit" name="submit" value="submit" class="btn btn-primary btn-lg active btn-block">Change password</button>
+    </form>
+    </div>
+    </br>
+    <div class="col-4 text-center">
+    <form th:action="@{/new}">
+      <button type="submit" name="submit" value="submit" class="btn btn-secondary btn-lg active btn-block">New User</button>
+    </form>
+    </div>
+    </br>
+  </div>
   </div>
 
   <div>
-    <h1>List of Passwords</h1>
+    <h1>List of Users</h1>
   </div>
 
   <div>
     <table class="table table-striped table-bordered">
       <thead class="thead-dark">
       <tr>
-        <th>Pass ID</th>
-        <th>Login</th>
-        <th>Password</th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Status</th>
         <th>Edit</th>
         <th>Del</th>
-        <th>Decrypt</th>
       </tr>
       </thead>
       <tbody>
 
       <tr th:each="password, status: ${listPasswords}">
-        <td th:text="${password.id}">Pass ID</td>
-        <td th:text="${password.login}">Login</td>
-        <td class="hidden" th:text="${password.walletPassword}">Password</td>
-
+        <td th:text="${password.id}">ID</td>
+        <td th:text="${password.login}">Name</td>
+        <td style="word-break:break-all;" th:text="${password.description}" >Description</td>
+        <td th:text="${password.date}">Date</td>
+        <td th:text="${password.status}">Status</td>
         <td><a th:href="@{/edit/{id}(id=${password.id})}">Edit</a></td>
         <td><a th:href="@{/delete/{id}(id=${password.id})}">Delete</a></td>
-        <td><a th:href="@{/decrypt/{id}(id=${password.id})}">Decrypt</a></td>
       </tr>
       </tbody>
     </table>
   </div>
-  <h3><a th:href="@{/change_password}">Change pass</a></h3>
+
 </div>
 </body>
 </html>

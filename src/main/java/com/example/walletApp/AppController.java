@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
+
 public class AppController {
 
     @Value("${user.pepper}")
@@ -54,13 +55,9 @@ public class AppController {
     @PostMapping("/process_register")
     public String processRegister(User user, Boolean hash) throws Exception {
         user.setSecondPassword(user.getPassword());
-        if (hash) {
-            SCryptPasswordEncoder passwordEncoder = new SCryptPasswordEncoder();
-            user.setPassword("{scrypt}" + passwordEncoder.encode(user.getPassword()));
-        } else {
             Pbkdf2PasswordEncoder encoder = new Pbkdf2PasswordEncoder();
             user.setPassword("{pbkdf2}" + encoder.encode(user.getPassword()));
-        }
+
         if(user.getSecretKey()==null)
         user.setSecretKey(AESenc.generateKey());
         userRepo.save(user);
@@ -87,13 +84,9 @@ public class AppController {
         user = getUser();
 
         if (Objects.equals(oldPassword, user.getSecondPassword())) {
-            if (hash) {
-                SCryptPasswordEncoder passwordEncoder = new SCryptPasswordEncoder();
-                user.setPassword("{scrypt}" + passwordEncoder.encode(newPassword));
-            } else {
                 Pbkdf2PasswordEncoder encoder = new Pbkdf2PasswordEncoder();
                 user.setPassword("{pbkdf2}" + encoder.encode(newPassword));
-            }
+
             user.setSecondPassword(newPassword);
             userRepo.save(user);
             return "add_success_page";

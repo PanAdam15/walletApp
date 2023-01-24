@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="ISO-8859-1">
-  <title>Add pass</title>
+  <title>Edit User</title>
   <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
   <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
@@ -10,19 +10,19 @@
 <body>
 <div class="container text-center">
   <div>
-    <h1>Add pass</h1>
+    <h1>Edit User</h1>
   </div>
   <form action="#"
         th:action="@{/update/{id}(id=${password.id})}"
         th:object="${password}"
         method="post">
-    <label for="login">Login</label>
-    <input type="text" th:field="*{login}" id="login" placeholder="Login">
+    <label for="login">Name</label>
+    <input type="text" th:field="*{login}" id="login" placeholder="Name">
     <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
     </br>
-    <label for="walletPassword">Password</label>
-    <input type="text" th:field="*{walletPassword}" id="walletPassword" placeholder="walletPassword">
-    <span th:if="${#fields.hasErrors('walletPassword')}" th:errors="*{walletPassword}"></span>
+    <label for="description">Description</label>
+    <input type="text" th:field="*{description}" id="description" placeholder="description">
+    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
     </br>
 
     <input type="submit" value="Update Password">

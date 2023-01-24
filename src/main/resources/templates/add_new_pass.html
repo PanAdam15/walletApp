@@ -8,19 +8,37 @@
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
+<style>
+    .form-control-large {
+        display: block;
+        width: 100%;
+        height: calc(8em + 0.75rem + 2px);
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+</style>
 <div class="container text-center">
   <div>
-    <h1>Add pass</h1>
+    <h1>Add User</h1>
   </div>
   <form th:action="@{/process_new_pass}" th:object="${password}"
         method="post" style="max-width: 600px; margin: 0 auto;">
     <div class="m-3">
       <div class="form-group row">
 
-            <label class="col-4 col-form-label">Login: </label>
+            <label class="col-4 col-form-label">Name: </label>
           <input type="text" th:field="*{login}" class="form-control" required />
-            <label class="col-4 col-form-label">Pass: </label>
-          <input type="text" th:field="*{walletPassword}" class="form-control" required />
+            <label for="exampleFormControlTextarea1" class="col-4 col-form-label">Description: </label>
+          <textarea th:field="*{description}" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+<!--          <input type="text" th:field="*{description}" class="form-control" th:rows="5" required />-->
 
       </div>
 

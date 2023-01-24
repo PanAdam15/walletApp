@@ -10,6 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 
@@ -24,11 +27,15 @@ public class PassController {
     private String sha256String;
 
     @PostMapping("/process_new_pass")
-    public String addNewPass(String walletPassword, String login) throws Exception {
+    public String addNewPass(String description, String login) throws Exception {
         Password p = new Password();
         p.setLogin(login);
         p.setUser(getUser());
-        p.setWalletPassword(aeSenc.encrypt(walletPassword, getUser().getSecretKey()));
+        p.setDescription(description);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy HH:mm:ss");
+        String formatedDate = ZonedDateTime.now(ZoneId.of("Europe/Warsaw")).format(formatter);
+        p.setDate(formatedDate);
+        p.setStatus("Created");
         passwordRepo.save(p);
 
         return "add_success_page";
@@ -65,8 +72,12 @@ public class PassController {
             password.setId(id);
             return "edit_pass";
         }
-        password.setWalletPassword(aeSenc.encrypt(password.getWalletPassword(), getUser().getSecretKey()));
+        password.setDescription(password.getDescription());
         password.setUser(getUser());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy HH:mm:ss");
+        String formatedDate = ZonedDateTime.now(ZoneId.of("Europe/Warsaw")).format(formatter);
+        password.setDate(formatedDate);
+        password.setStatus("Edited");
         passwordRepo.save(password);
         return "add_success_page";
     }

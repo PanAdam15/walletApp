@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
- 
+import java.time.ZonedDateTime;
+
 @Entity
 @Table(name = "passwords")
 public class Password {
@@ -17,7 +18,7 @@ public class Password {
     private String walletPassword;
 
     @Column
-    private String web_address;
+    private String status;
 
     @Column
     private String description;
@@ -25,11 +26,22 @@ public class Password {
     @Column
     private String login;
 
+    @Column
+    private String date;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     @NotNull
     @JsonIgnoreProperties({"passwords"})
     private User user;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public User getUser() {
         return user;
@@ -55,12 +67,12 @@ public class Password {
         this.walletPassword = walletPassword;
     }
 
-    public String getWeb_address() {
-        return web_address;
+    public String getStatus() {
+        return status;
     }
 
-    public void setWeb_address(String web_address) {
-        this.web_address = web_address;
+    public void setStatus(String web_address) {
+        this.status = web_address;
     }
 
     public String getDescription() {
