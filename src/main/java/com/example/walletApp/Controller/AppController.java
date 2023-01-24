@@ -1,11 +1,15 @@
-package com.example.walletApp;
+package com.example.walletApp.Controller;
 
+import com.example.walletApp.*;
+import com.example.walletApp.Entity.Password;
+import com.example.walletApp.Entity.User;
+import com.example.walletApp.Repository.PasswordRepository;
+import com.example.walletApp.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
-import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,8 +62,10 @@ public class AppController {
             Pbkdf2PasswordEncoder encoder = new Pbkdf2PasswordEncoder();
             user.setPassword("{pbkdf2}" + encoder.encode(user.getPassword()));
 
+        if(userRepo.findByLogin(user.getLogin())!=null)
+            return "error_value";
         if(user.getSecretKey()==null)
-        user.setSecretKey(AESenc.generateKey());
+        user.setSecretKey(aeSenc.generateKey());
         userRepo.save(user);
 
         return "register_success";

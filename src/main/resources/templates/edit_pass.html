@@ -12,21 +12,42 @@
   <div>
     <h1>Edit User</h1>
   </div>
-  <form action="#"
+  <div class="m-3">
+    <div class="form-group row">
+  <form
         th:action="@{/update/{id}(id=${password.id})}"
         th:object="${password}"
-        method="post">
-    <label for="login">Name</label>
-    <input type="text" th:field="*{login}" id="login" placeholder="Name">
-    <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
-    </br>
-    <label for="description">Description</label>
-    <input type="text" th:field="*{description}" id="description" placeholder="description">
-    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
-    </br>
+        method="post" style="max-width: 600px; margin: 0 auto;">
 
-    <input type="submit" value="Update Password">
-  </form>
+      <div class="m-3">
+        <div class="form-group row">
+
+          <label class="col-4 col-form-label">Name: </label>
+          <input type="text" th:field="*{login}" class="form-control" required />
+          <label for="exampleFormControlTextarea1" class="col-4 col-form-label">Description: </label>
+          <textarea th:field="*{description}" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          <!--          <input type="text" th:field="*{description}" class="form-control" th:rows="5" required />-->
+
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-primary">Change</button>
+        </div>
+      </div>
+    </form>
+    </form>
+
+<!--    <label for="login">Name</label>-->
+<!--    <input type="text" th:field="*{login}" id="login" placeholder="Name">-->
+<!--    <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>-->
+<!--    </br>-->
+<!--    <label for="description">Description</label>-->
+<!--    <input type="text" th:field="*{description}" id="description" placeholder="description">-->
+<!--    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>-->
+<!--    </br>-->
+
+<!--    <input type="submit" value="Update Password">-->
+<!--  </form>-->
 </div>
 </body>
 </html>

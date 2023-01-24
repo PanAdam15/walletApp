@@ -1,4 +1,4 @@
-package com.example.walletApp;
+package com.example.walletApp.Entity;
  
 import org.springframework.lang.Nullable;
 

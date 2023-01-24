@@ -1,5 +1,10 @@
-package com.example.walletApp;
+package com.example.walletApp.Controller;
 
+import com.example.walletApp.*;
+import com.example.walletApp.Entity.Password;
+import com.example.walletApp.Entity.User;
+import com.example.walletApp.Repository.PasswordRepository;
+import com.example.walletApp.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,12 +37,11 @@ public class PassController {
         p.setLogin(login);
         p.setUser(getUser());
         p.setDescription(description);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");
         String formatedDate = ZonedDateTime.now(ZoneId.of("Europe/Warsaw")).format(formatter);
         p.setDate(formatedDate);
         p.setStatus("Created");
         passwordRepo.save(p);
-
         return "add_success_page";
     }
 
@@ -74,7 +78,7 @@ public class PassController {
         }
         password.setDescription(password.getDescription());
         password.setUser(getUser());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");
         String formatedDate = ZonedDateTime.now(ZoneId.of("Europe/Warsaw")).format(formatter);
         password.setDate(formatedDate);
         password.setStatus("Edited");

@@ -1,8 +1,8 @@
 package com.example.walletApp;
 
+import com.example.walletApp.Controller.AppController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
 @SpringBootApplication()
 public class WalletAppApplication {

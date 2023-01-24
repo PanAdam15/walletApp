@@ -1,6 +1,6 @@
 package com.example.walletApp;
 
-import com.beust.ah.A;
+import com.example.walletApp.Entity.User;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -12,7 +12,10 @@ public class UserTest {
 User user;
 String PASSWORD = "12345";
 String LOGIN = "Staszek";
-Key SECRET_KEY = AESenc.generateKey();
+
+
+        AESenc aeSenc;
+Key SECRET_KEY = aeSenc.generateKey();
     @BeforeMethod
     public void setUp() {
         user = new User();
