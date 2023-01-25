@@ -1,7 +1,7 @@
-package com.example.walletApp.Service;
+package com.example.UserApp.Service;
  
-import com.example.walletApp.Entity.User;
-import com.example.walletApp.Repository.UserRepository;
+import com.example.UserApp.Entity.User;
+import com.example.UserApp.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

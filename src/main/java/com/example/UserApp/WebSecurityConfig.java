@@ -1,8 +1,8 @@
-package com.example.walletApp;
+package com.example.UserApp;
  
 import javax.sql.DataSource;
 
-import com.example.walletApp.Service.CustomUserDetailsService;
+import com.example.UserApp.Service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

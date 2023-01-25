@@ -1,11 +1,10 @@
-package com.example.walletApp;
+package com.example.UserApp;
 
 import javax.crypto.BadPaddingException;
-import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.Key;
 
-import static com.example.walletApp.AESenc.generateKey;
+import static com.example.UserApp.AESenc.generateKey;
 import static org.testng.Assert.*;
 
 public class AESencTest {

@@ -1,8 +1,8 @@
-package com.example.walletApp.Service;
+package com.example.UserApp.Service;
  
 import java.util.Collection;
 
-import com.example.walletApp.Entity.User;
+import com.example.UserApp.Entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
  

@@ -1,15 +1,13 @@
-package com.example.walletApp.Controller;
+package com.example.UserApp.Controller;
 
-import com.example.walletApp.*;
-import com.example.walletApp.Entity.Password;
-import com.example.walletApp.Entity.User;
-import com.example.walletApp.Repository.PasswordRepository;
-import com.example.walletApp.Repository.UserRepository;
+import com.example.UserApp.*;
+import com.example.UserApp.Entity.Password;
+import com.example.UserApp.Entity.User;
+import com.example.UserApp.Repository.PasswordRepository;
+import com.example.UserApp.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
-import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,11 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
 
 @Controller
-public class PassController {
+public class UserController {
 
     @Autowired
     private UserRepository userRepo;
@@ -86,35 +83,6 @@ public class PassController {
         return "add_success_page";
     }
 
-    @GetMapping("/decrypt/{id}")
-    public String showDecryptForm(@PathVariable("id") long id, Model model) {
-        Password password = passwordRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid pass Id:" + id));
-        model.addAttribute("user", getUser());
-        model.addAttribute("password", password);
-        model.addAttribute("hash", sha256String);
-        return "decrypt_password";
-    }
-
-    @RequestMapping("/decrypted/{id}")
-    public String handleDecryption(@PathVariable("id") long id, @RequestParam(name = "userPassword") String userPassword, Password password,
-                                   BindingResult result, Model model) throws Exception {
-        if (result.hasErrors()) {
-            password.setId(id);
-            return "decrypt_password";
-        }
-        SCryptPasswordEncoder passwordEncoder = new SCryptPasswordEncoder();
-        Pbkdf2PasswordEncoder encoder = new Pbkdf2PasswordEncoder();
-        //|| Objects.equals("{pbkdf2}" + encoder.encode(userPassword), user.getPassword())
-        if (Objects.equals(userPassword, getUser().getSecondPassword())) {
-            String decrypted = aeSenc.decrypt(password.getWalletPassword(), getUser().getSecretKey());
-            model.addAttribute("decrypted_password", decrypted);
-            return "encrypted_pass";
-        } else
-            return "error_value";
-
-
-    }
     public User getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return userRepo.findByLogin(authentication.getName());

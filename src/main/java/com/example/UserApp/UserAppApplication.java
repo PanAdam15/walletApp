@@ -1,14 +1,14 @@
-package com.example.walletApp;
+package com.example.UserApp;
 
-import com.example.walletApp.Controller.AppController;
+import com.example.UserApp.Controller.AppController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication()
-public class WalletAppApplication {
+public class UserAppApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WalletAppApplication.class, args);
+		SpringApplication.run(UserAppApplication.class, args);
 	}
 	AppController appController = new AppController();
 

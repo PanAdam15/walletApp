@@ -1,10 +1,10 @@
-package com.example.walletApp.Controller;
+package com.example.UserApp.Controller;
 
-import com.example.walletApp.*;
-import com.example.walletApp.Entity.Password;
-import com.example.walletApp.Entity.User;
-import com.example.walletApp.Repository.PasswordRepository;
-import com.example.walletApp.Repository.UserRepository;
+import com.example.UserApp.*;
+import com.example.UserApp.Entity.Password;
+import com.example.UserApp.Entity.User;
+import com.example.UserApp.Repository.PasswordRepository;
+import com.example.UserApp.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -97,6 +97,6 @@ public class AppController {
             userRepo.save(user);
             return "add_success_page";
         }
-        return "error_value";
+        return "error2_value";
     }
 }

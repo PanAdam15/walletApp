@@ -1,6 +1,6 @@
-package com.example.walletApp;
+package com.example.UserApp;
 
-import com.example.walletApp.Entity.Password;
+import com.example.UserApp.Entity.Password;
 
 public class PasswordTest {
 

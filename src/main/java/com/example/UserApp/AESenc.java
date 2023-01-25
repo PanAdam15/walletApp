@@ -1,4 +1,4 @@
-package com.example.walletApp;
+package com.example.UserApp;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -8,8 +8,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 public class AESenc {
  private static final Random RANDOM = new SecureRandom();
  private static final String HMAC_SHA512 = "HmacSHA512";

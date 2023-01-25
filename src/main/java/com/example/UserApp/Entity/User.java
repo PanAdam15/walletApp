@@ -1,11 +1,7 @@
-package com.example.walletApp.Entity;
+package com.example.UserApp.Entity;
  
-import org.springframework.lang.Nullable;
-
 import javax.persistence.*;
 import java.security.Key;
-import java.util.LinkedList;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
